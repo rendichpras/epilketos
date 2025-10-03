@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TokenStatus {
+  unused
+  used
+  expired
+}
+
+model TokenBatch {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  count     Int
+  expiresAt DateTime?
+  note      String?
+
+  tokens Token[]
+}
+
+model Token {
+  id        String      @id @default(cuid())
+  tokenHash String      @unique
+  status    TokenStatus @default(unused)
+  expiresAt DateTime?
+  usedAt    DateTime?
+  kioskId   String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  batchId String?
+  batch   TokenBatch? @relation(fields: [batchId], references: [id])
+
+  @@index([status])
+  @@index([expiresAt])
+}
+
+model CandidatePair {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  nomorUrut Int
+  ketua     String
+  wakil     String
+  fotoUrl   String?
+  visi      String?
+  misi      String?
+  aktif     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Election {
+  id        Int      @id @default(autoincrement())
+  name      String
+  startAt   DateTime
+  endAt     DateTime
+  isOpen    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vote {
+  id              String   @id @default(cuid())
+  candidatePairId Int
+  createdAt       DateTime @default(now())
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+}
