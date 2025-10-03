@@ -18,12 +18,6 @@ export default function Navbar() {
               <span className="text-[10px] sm:text-xs text-muted-foreground">SMK HS AGUNG</span>
             </div>
           </div>
-          <div className="text-center flex-1 md:flex-none">
-            <span className="text-xs sm:text-sm text-muted-foreground">
-              Pemilihan Ketua & Wakil Ketua OSIS
-              <span className="hidden sm:inline"> Periode 2025/2026</span>
-            </span>
-          </div>
         </div>
       </div>
     </nav>
