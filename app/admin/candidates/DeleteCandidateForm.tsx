@@ -12,7 +12,7 @@ export default function DeleteCandidateForm({ id, action }: Props) {
   return (
     <form action={action} onSubmit={onSubmit}>
       <input type="hidden" name="id" value={id} />
-      <button className="rounded-lg border px-3 py-1 text-xs text-red-600 hover:bg-red-50">
+      <button className="rounded-lg border border-destructive/20 px-3 py-1.5 text-xs font-medium text-destructive transition-colors hover:bg-destructive/10">
         Hapus
       </button>
     </form>

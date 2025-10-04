@@ -3,12 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { verifyToken } from "./actions";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import SubmitTokenButton from "./SubmitTokenButton";
+import { useFormStatus } from "react-dom";
 
 const ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+
+function SubmitButton({ disabled }: { disabled: boolean }) {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={disabled || pending}
+      className="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-8 w-full sm:w-auto text-base py-6"
+    >
+      {pending ? "Memverifikasi…" : "Verifikasi Token"}
+    </button>
+  );
+}
 
 const AMBIGUOUS_MAP: Record<string, string> = {
   i: "1",
@@ -91,90 +101,90 @@ export default function TokenPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center">
-      <div className="container max-w-md mx-auto px-4 py-6 md:py-8">
+    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center">
+      <div className="w-full max-w-md mx-auto px-4">
         <form 
-          className="w-full text-center space-y-6"
+          className="flex flex-col gap-8"
           autoComplete="off"
           action={verifyToken}
         >
-          <div className="space-y-2">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Masukkan Token
+          {/* Header */}
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-3 text-primary">
+              Verifikasi Token
             </h1>
-            <p className="text-base text-muted-foreground">
-              Masukkan 8 karakter token yang telah diberikan oleh panitia
+            <p className="text-muted-foreground">
+              Masukkan token 8 karakter yang telah diberikan oleh panitia
             </p>
           </div>
 
-          <div className="flex items-center justify-center gap-3">
-            <Input
-              ref={aRef}
-              type="text"
-              name="tokenA"
-              value={a}
-              onChange={(e) => handleChangeA(e.target.value)}
-              onKeyDown={handleKeyDownA}
-              onPaste={handlePaste}
-              inputMode="text"
-              autoComplete="one-time-code"
-              spellCheck={false}
-              aria-label="Token bagian pertama"
-              className="w-32 text-center text-2xl tracking-[0.35em] py-6"
-              placeholder="XXXX"
-              required
-            />
-            <span className="select-none text-xl font-medium text-muted-foreground">
-              -
-            </span>
-            <Input
-              ref={bRef}
-              type="text"
-              name="tokenB"
-              value={b}
-              onChange={(e) => handleChangeB(e.target.value)}
-              onKeyDown={handleKeyDownB}
-              onPaste={handlePaste}
-              inputMode="text"
-              autoComplete="one-time-code"
-              spellCheck={false}
-              aria-label="Token bagian kedua"
-              className="w-32 text-center text-2xl tracking-[0.35em] py-6"
-              placeholder="XXXX"
-              required
-            />
+          {/* Token Input */}
+          <div className="bg-card border rounded-xl p-6 space-y-6">
+            <div className="flex items-center justify-center gap-4">
+              <input
+                ref={aRef}
+                type="text"
+                name="tokenA"
+                value={a}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeA(e.target.value)}
+                onKeyDown={handleKeyDownA}
+                onPaste={handlePaste}
+                inputMode="text"
+                autoComplete="one-time-code"
+                spellCheck={false}
+                aria-label="Token bagian pertama"
+                className="w-32 h-16 text-center text-2xl tracking-[0.35em] rounded-lg border bg-background/50 hover:bg-background focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="XXXX"
+                required
+              />
+              <div className="w-4 h-0.5 bg-border rounded-full" />
+              <input
+                ref={bRef}
+                type="text"
+                name="tokenB"
+                value={b}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeB(e.target.value)}
+                onKeyDown={handleKeyDownB}
+                onPaste={handlePaste}
+                inputMode="text"
+                autoComplete="one-time-code"
+                spellCheck={false}
+                aria-label="Token bagian kedua"
+                className="w-32 h-16 text-center text-2xl tracking-[0.35em] rounded-lg border bg-background/50 hover:bg-background focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
+                placeholder="XXXX"
+                required
+              />
+            </div>
+
+            <div className="text-center text-sm text-muted-foreground">
+              <p>Token bersifat case-insensitive dan mengabaikan karakter khusus</p>
+            </div>
           </div>
 
+          {/* Error Messages */}
           {errorFlag === "invalid" && (
-            <Alert variant="destructive">
-              <AlertDescription>
-                Token tidak valid, sudah digunakan, atau telah kadaluarsa
-              </AlertDescription>
-            </Alert>
+            <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-center text-sm text-destructive animate-in fade-in-50">
+              Token tidak valid, sudah digunakan, atau telah kadaluarsa
+            </div>
           )}
           {errorFlag === "rate" && (
-            <Alert variant="destructive">
-              <AlertDescription>
-                Terlalu banyak percobaan. Silakan coba lagi dalam beberapa saat
-              </AlertDescription>
-            </Alert>
+            <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-center text-sm text-destructive animate-in fade-in-50">
+              Terlalu banyak percobaan. Silakan coba lagi dalam beberapa saat
+            </div>
           )}
 
-          <div className="sticky bottom-0 left-0 right-0 w-full bg-background/80 backdrop-blur-sm border-t">
-            <div className="container max-w-5xl mx-auto px-4 py-6">
-              <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="lg"
-                  onClick={resetAll}
-                  className="w-full sm:w-auto text-base py-6"
-                >
-                  Reset
-                </Button>
-                <SubmitTokenButton disabled={a.length !== 4 || b.length !== 4} />
-              </div>
-            </div>
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row justify-between gap-3">
+            <button
+              type="button"
+              onClick={resetAll}
+              className="w-full sm:w-auto h-12 px-6 rounded-lg border bg-card hover:bg-accent text-base"
+            >
+              Reset
+            </button>
+            <SubmitButton 
+              disabled={a.length !== 4 || b.length !== 4}
+            />
           </div>
         </form>
       </div>

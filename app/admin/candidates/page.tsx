@@ -11,8 +11,14 @@ export default async function CandidatesAdminPage() {
   });
 
   return (
-    <main className="space-y-6">
-      <div className="card">
+    <main className="space-y-6 p-6">
+      {/* Header */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold tracking-tight text-primary">Kandidat</h1>
+        <p className="text-muted-foreground">Kelola daftar pasangan kandidat</p>
+      </div>
+
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold">Tambah Pasangan Kandidat</h2>
         <form
           action={createCandidate}
@@ -25,7 +31,7 @@ export default async function CandidatesAdminPage() {
               type="number"
               min={1}
               required
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div>
@@ -33,7 +39,7 @@ export default async function CandidatesAdminPage() {
             <input
               name="slug"
               placeholder="alpha"
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div>
@@ -41,7 +47,7 @@ export default async function CandidatesAdminPage() {
             <input
               name="ketua"
               required
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div>
@@ -49,7 +55,7 @@ export default async function CandidatesAdminPage() {
             <input
               name="wakil"
               required
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div className="md:col-span-2">
@@ -57,7 +63,7 @@ export default async function CandidatesAdminPage() {
             <input
               name="fotoUrl"
               placeholder="https://..."
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div>
@@ -65,7 +71,7 @@ export default async function CandidatesAdminPage() {
             <textarea
               name="visi"
               rows={3}
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div>
@@ -73,54 +79,57 @@ export default async function CandidatesAdminPage() {
             <textarea
               name="misi"
               rows={3}
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div className="md:col-span-2">
-            <button className="btn-primary h-11 rounded-xl px-5">Tambah</button>
+            <button className="h-10 rounded-lg bg-primary px-4 font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+              Tambah
+            </button>
           </div>
         </form>
       </div>
-      <div className="card">
+
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Daftar Kandidat</h2>
-          <Link href="/admin" className="text-sm text-gray-600 hover:underline">
+          <Link href="/admin" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Kembali ke Dashboard
           </Link>
         </div>
 
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="text-left text-gray-500">
+          <table className="min-w-full divide-y divide-gray-200 text-sm">
+            <thead className="text-left text-gray-500 bg-gray-50">
               <tr>
-                <th className="py-2 pr-4">#</th>
-                <th className="py-2 pr-4">Pasangan</th>
-                <th className="py-2 pr-4">Slug</th>
-                <th className="py-2 pr-4">Aktif</th>
-                <th className="py-2 pr-4">Aksi</th>
+                <th className="whitespace-nowrap py-3 pr-4 font-medium">#</th>
+                <th className="whitespace-nowrap py-3 pr-4 font-medium">Pasangan</th>
+                <th className="whitespace-nowrap py-3 pr-4 font-medium">Slug</th>
+                <th className="whitespace-nowrap py-3 pr-4 font-medium">Aktif</th>
+                <th className="whitespace-nowrap py-3 pr-4 font-medium">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {list.map((c) => (
-                <tr key={c.id} className="border-t">
-                  <td className="py-2 pr-4 font-medium">{c.nomorUrut}</td>
-                  <td className="py-2 pr-4">
+                <tr key={c.id} className="border-t hover:bg-gray-50">
+                  <td className="whitespace-nowrap py-3 pr-4 font-medium">{c.nomorUrut}</td>
+                  <td className="whitespace-nowrap py-3 pr-4">
                     {c.ketua} &amp; {c.wakil}
                   </td>
-                  <td className="py-2 pr-4 text-gray-600">{c.slug}</td>
-                  <td className="py-2 pr-4">
+                  <td className="whitespace-nowrap py-3 pr-4 text-muted-foreground">{c.slug}</td>
+                  <td className="whitespace-nowrap py-3 pr-4">
                     <form action={toggleActive}>
                       <input type="hidden" name="id" value={c.id} />
-                      <button className="rounded-lg border px-3 py-1 text-xs font-medium hover:bg-gray-50">
+                      <button className="rounded-lg border border-input px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
                         {c.aktif ? "Nonaktifkan" : "Aktifkan"}
                       </button>
                     </form>
                   </td>
-                  <td className="py-2 pr-4">
+                  <td className="whitespace-nowrap py-3 pr-4">
                     <div className="flex gap-2">
                       <Link
                         href={`/admin/candidates/${c.id}/edit`}
-                        className="rounded-lg border px-3 py-1 text-xs hover:bg-gray-50"
+                        className="rounded-lg border border-input px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                       >
                         Edit
                       </Link>
@@ -131,7 +140,7 @@ export default async function CandidatesAdminPage() {
               ))}
               {list.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-6 text-center text-gray-500">
+                  <td colSpan={5} className="py-6 text-center text-muted-foreground">
                     Belum ada kandidat.
                   </td>
                 </tr>

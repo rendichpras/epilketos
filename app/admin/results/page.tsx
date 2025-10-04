@@ -41,12 +41,18 @@ export default async function ResultsPage() {
   }));
 
   return (
-    <main className="space-y-6">
-      <div className="card">
+    <div className="container space-y-6 p-6">
+      {/* Header */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold tracking-tight text-primary">Hasil Pemilihan</h1>
+        <p className="text-muted-foreground">Lihat hasil dan statistik pemilihan</p>
+      </div>
+
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Ringkasan</h2>
           <form action={refreshResults}>
-            <button className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50">
+            <button className="rounded-lg border border-input px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
               Refresh
             </button>
           </form>
@@ -59,11 +65,11 @@ export default async function ResultsPage() {
         </div>
       </div>
 
-      <div className="card">
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold">Perolehan Suara per Pasangan</h2>
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="text-left text-gray-500">
+          <table className="min-w-full divide-y divide-gray-200 text-sm">
+            <thead className="text-left text-gray-500 bg-gray-50">
               <tr>
                 <th className="py-2 pr-4">#</th>
                 <th className="py-2 pr-4">Pasangan</th>
@@ -72,10 +78,10 @@ export default async function ResultsPage() {
             </thead>
             <tbody>
               {byCandidate.map((r) => (
-                <tr key={r.id} className="border-t">
-                  <td className="py-2 pr-4 font-medium">{r.nomor}</td>
-                  <td className="py-2 pr-4">{r.name.replace(/^#\d+\s/, "")}</td>
-                  <td className="py-2 pr-4">{r.votes}</td>
+                <tr key={r.id} className="border-t hover:bg-gray-50">
+                  <td className="whitespace-nowrap py-3 pr-4 font-medium">{r.nomor}</td>
+                  <td className="whitespace-nowrap py-3 pr-4">{r.name.replace(/^#\d+\s/, "")}</td>
+                  <td className="whitespace-nowrap py-3 pr-4">{r.votes}</td>
                 </tr>
               ))}
               {byCandidate.length === 0 && (
@@ -91,7 +97,7 @@ export default async function ResultsPage() {
 
         <div className="mt-6">
           <a
-            className="btn-primary rounded-xl px-4 py-2"
+            className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             href="/admin/results/export"
           >
             Export CSV
@@ -110,15 +116,15 @@ export default async function ResultsPage() {
       <Link href="/admin" className="text-sm text-gray-600 hover:underline">
         Kembali ke Dashboard
       </Link>
-    </main>
+    </div>
   );
 }
 
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="text-2xl font-semibold">{value}</div>
-      <div className="text-gray-500">{label}</div>
+    <div className="rounded-xl border bg-card p-6 shadow-sm transition-colors hover:bg-accent/50">
+      <div className="text-3xl font-bold text-foreground">{value}</div>
+      <div className="mt-1 text-sm text-muted-foreground">{label}</div>
     </div>
   );
 }

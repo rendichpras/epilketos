@@ -10,37 +10,56 @@ export default function LoginPage() {
   const next = sp.get("redirect") ?? "/admin";
 
   return (
-    <main className="mx-auto max-w-sm">
-      <div className="card">
-        <h2 className="text-xl font-semibold">Masuk Admin</h2>
-        <form action={formAction} className="mt-4 space-y-3">
-          <input type="hidden" name="next" value={next} />
-          <div>
-            <label className="text-sm text-gray-700">Email</label>
-            <input
-              name="email"
-              type="email"
-              required
-              className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2"
-            />
+    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center">
+      <div className="w-full max-w-md mx-auto px-4">
+        <div className="flex flex-col gap-8">
+          {/* Header */}
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-3 text-primary">Masuk Admin</h1>
+            <p className="text-muted-foreground">Masuk ke dashboard administrator</p>
           </div>
-          <div>
-            <label className="text-sm text-gray-700">Password</label>
-            <input
-              name="password"
-              type="password"
-              required
-              className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2"
-            />
+          {/* Login Form */}
+          <div className="bg-card border rounded-xl p-6 space-y-4">
+            <form action={formAction} className="space-y-4">
+              <input type="hidden" name="next" value={next} />
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  className="w-full h-10 rounded-lg border bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Password</label>
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  autoComplete="current-password"
+                  className="w-full h-10 rounded-lg border bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                />
+              </div>
+
+              {state?.error && (
+                <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-center text-sm text-destructive animate-in fade-in-50">
+                  {state.error}
+                </div>
+              )}
+
+              <button 
+                type="submit"
+                className="w-full h-11 inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90">
+                Masuk
+              </button>
+            </form>
           </div>
-          {state?.error && (
-            <p className="text-sm text-red-600">{state.error}</p>
-          )}
-          <button className="btn-primary h-11 w-full rounded-xl px-5">
-            Masuk
-          </button>
-        </form>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -31,53 +31,59 @@ export default function GenerateTokensForm({
   }, [state]);
 
   return (
-    <form action={formAction} className="grid grid-cols-1 gap-3 md:grid-cols-2">
-      <div>
-        <label className="text-sm text-gray-700">Jumlah token</label>
+    <form action={formAction} className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="space-y-2">
+        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          Jumlah token
+        </label>
         <input
           name="count"
           type="number"
           min={1}
           max={5000}
           defaultValue={100}
-          className="mt-1 w-full rounded-xl border px-3 py-2"
+          className="w-full h-10 rounded-lg border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           required
         />
       </div>
-      <div>
-        <label className="text-sm text-gray-700">Kadaluarsa (opsional)</label>
+      <div className="space-y-2">
+        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          Kadaluarsa (opsional)
+        </label>
         <input
           name="expiresAt"
           type="datetime-local"
-          className="mt-1 w-full rounded-xl border px-3 py-2"
+          className="w-full h-10 rounded-lg border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         />
       </div>
-      <div className="md:col-span-2">
-        <label className="text-sm text-gray-700">
+      <div className="md:col-span-2 space-y-2">
+        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
           Catatan batch (opsional)
         </label>
         <input
           name="note"
           placeholder="Gelombang 1 kelas X"
-          className="mt-1 w-full rounded-xl border px-3 py-2"
+          className="w-full h-10 rounded-lg border bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         />
       </div>
       <div className="md:col-span-2">
-        <button className="btn-primary h-11 rounded-xl px-5">
+        <button 
+          type="submit"
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 w-full md:w-auto"
+        >
           Generate & Download CSV
         </button>
       </div>
 
       {state && !state.ok && (
-        <p className="md:col-span-2 text-sm text-red-600">
+        <div className="md:col-span-2 rounded-lg border border-destructive bg-destructive/10 p-4 text-sm text-destructive">
           Gagal membuat token. Coba lagi.
-        </p>
+        </div>
       )}
       {state?.ok && (
-        <p className="md:col-span-2 text-sm text-emerald-700">
-          Batch dibuat. Jika unduhan tidak mulai otomatis, klik ulang tombol
-          ini.
-        </p>
+        <div className="md:col-span-2 rounded-lg border border-green-600/20 bg-green-50 p-4 text-sm text-green-600">
+          Batch dibuat. Jika unduhan tidak mulai otomatis, klik ulang tombol ini.
+        </div>
       )}
     </form>
   );

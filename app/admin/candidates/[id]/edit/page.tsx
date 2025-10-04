@@ -15,8 +15,8 @@ export default async function EditCandidatePage({
   if (!c) notFound();
 
   return (
-    <main className="space-y-6">
-      <div className="card">
+    <main className="space-y-6 p-6">
+      <div className="rounded-xl border bg-white p-6 shadow-sm">
         <h2 className="text-lg font-semibold">Edit Kandidat #{c.nomorUrut}</h2>
         <form
           action={updateCandidate}
@@ -48,7 +48,7 @@ export default async function EditCandidatePage({
               name="ketua"
               defaultValue={c.ketua}
               required
-              className="mt-1 w-full rounded-xl border px-3 py-2"
+              className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -88,10 +88,10 @@ export default async function EditCandidatePage({
           </div>
 
           <div className="md:col-span-2 flex items-center gap-3">
-            <button className="btn-primary h-11 rounded-xl px-5">Simpan</button>
+            <button className="h-10 rounded-lg bg-blue-600 px-4 font-medium text-white transition-colors hover:bg-blue-700">Simpan</button>
             <Link
               href="/admin/candidates"
-              className="rounded-xl border px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+              className="rounded-lg border px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
             >
               Batal
             </Link>

@@ -19,7 +19,7 @@ export default function RootLayout({
         <Navbar />
         <ElectionBanner />
         <main className="flex-1">
-          <div className="container mx-auto">
+          <div>
             {children}
           </div>
         </main>
