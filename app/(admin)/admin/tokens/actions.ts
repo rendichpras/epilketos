@@ -39,7 +39,7 @@ function hashToken(tokenPlain: string) {
   return h.digest("hex");
 }
 
-export async function generateTokens(formData: FormData) {
+export async function generateTokens(_prevState: unknown, formData: FormData) {
   "use server";
 
   const count = Math.min(Math.max(Number(formData.get("count") ?? 0), 1), 5000);
