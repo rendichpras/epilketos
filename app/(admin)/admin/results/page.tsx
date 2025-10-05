@@ -21,38 +21,46 @@ export default async function ResultsPage() {
     by: ["candidatePairId"],
     _count: { _all: true },
   });
-  const byCandidate = candidates.map((c) => {
-    const row = grouped.find((g) => g.candidatePairId === c.id);
-    return {
-      id: c.id,
-      nomor: c.nomorUrut,
-      name: `#${c.nomorUrut} ${c.ketua} & ${c.wakil}`,
-      votes: row?._count._all ?? 0,
-    };
-  });
-  byCandidate.sort((a, b) => b.votes - a.votes);
+
+  const byCandidate = candidates
+    .map((c) => {
+      const row = grouped.find((g) => g.candidatePairId === c.id);
+      return {
+        id: c.id,
+        nomor: c.nomorUrut,
+        name: `#${c.nomorUrut} ${c.ketua} & ${c.wakil}`,
+        votes: row?._count._all ?? 0,
+      };
+    })
+    .sort((a, b) => b.votes - a.votes);
 
   const participation = totalTokens
     ? Math.round((totalTokensUsed / totalTokens) * 100)
     : 0;
+
   const chartData = byCandidate.map((r) => ({
     name: `#${r.nomor}`,
     votes: r.votes,
   }));
 
   return (
-    <div className="container space-y-6 p-6">
-      {/* Header */}
+    <div className="space-y-6">
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight text-primary">Hasil Pemilihan</h1>
-        <p className="text-muted-foreground">Lihat hasil dan statistik pemilihan</p>
+        <h1 className="text-3xl font-bold tracking-tight text-primary">
+          Hasil Pemilihan
+        </h1>
+        <p className="text-muted-foreground">
+          Lihat hasil dan statistik pemilihan
+        </p>
       </div>
-
       <div className="rounded-xl border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Ringkasan</h2>
           <form action={refreshResults}>
-            <button className="rounded-lg border border-input px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
+            <button
+              className="rounded-lg border border-input px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+              type="submit"
+            >
               Refresh
             </button>
           </form>
@@ -64,13 +72,12 @@ export default async function ResultsPage() {
           <Stat label="Partisipasi" value={`${participation}%`} />
         </div>
       </div>
-
       <div className="rounded-xl border bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold">Perolehan Suara per Pasangan</h2>
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 text-sm">
-            <thead className="text-left text-gray-500 bg-gray-50">
-              <tr>
+          <table className="min-w-full text-sm">
+            <thead className="text-left text-muted-foreground">
+              <tr className="border-b">
                 <th className="py-2 pr-4">#</th>
                 <th className="py-2 pr-4">Pasangan</th>
                 <th className="py-2 pr-4">Suara</th>
@@ -78,15 +85,25 @@ export default async function ResultsPage() {
             </thead>
             <tbody>
               {byCandidate.map((r) => (
-                <tr key={r.id} className="border-t hover:bg-gray-50">
-                  <td className="whitespace-nowrap py-3 pr-4 font-medium">{r.nomor}</td>
-                  <td className="whitespace-nowrap py-3 pr-4">{r.name.replace(/^#\d+\s/, "")}</td>
+                <tr
+                  key={r.id}
+                  className="border-b last:border-0 hover:bg-muted/50"
+                >
+                  <td className="whitespace-nowrap py-3 pr-4 font-medium">
+                    {r.nomor}
+                  </td>
+                  <td className="whitespace-nowrap py-3 pr-4">
+                    {r.name.replace(/^#\d+\s/, "")}
+                  </td>
                   <td className="whitespace-nowrap py-3 pr-4">{r.votes}</td>
                 </tr>
               ))}
               {byCandidate.length === 0 && (
                 <tr>
-                  <td colSpan={3} className="py-6 text-center text-gray-500">
+                  <td
+                    colSpan={3}
+                    className="py-6 text-center text-muted-foreground"
+                  >
                     Belum ada data.
                   </td>
                 </tr>
@@ -105,16 +122,21 @@ export default async function ResultsPage() {
         </div>
       </div>
 
-      <div className="card">
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
         <h2 className="text-lg font-semibold">Grafik</h2>
-        <ResultsChart data={chartData} />
-        <p className="mt-3 text-xs text-gray-500">
+        <div className="mt-4">
+          <ResultsChart data={chartData} />
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">
           Grafik ini dirender di Client Component (Recharts).
         </p>
       </div>
 
-      <Link href="/admin" className="text-sm text-gray-600 hover:underline">
-        Kembali ke Dashboard
+      <Link
+        href="/admin"
+        className="inline-flex items-center text-sm text-muted-foreground hover:text-primary"
+      >
+        ← Kembali ke Dashboard
       </Link>
     </div>
   );

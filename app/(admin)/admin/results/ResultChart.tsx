@@ -18,31 +18,27 @@ export default function ResultsChart({ data }: { data: Row[] }) {
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground) / 0.2)" />
-          <XAxis 
-            dataKey="name" 
+          <XAxis
+            dataKey="name"
             stroke="hsl(var(--foreground))"
             fontSize={12}
             tickLine={false}
           />
-          <YAxis 
+          <YAxis
             allowDecimals={false}
             stroke="hsl(var(--foreground))"
             fontSize={12}
             tickLine={false}
           />
-          <Tooltip 
-            contentStyle={{ 
+          <Tooltip
+            contentStyle={{
               backgroundColor: "hsl(var(--background))",
               border: "1px solid hsl(var(--border))",
               borderRadius: "0.5rem",
-              fontSize: "0.875rem"
+              fontSize: "0.875rem",
             }}
           />
-          <Bar 
-            dataKey="votes" 
-            fill="hsl(var(--primary))"
-            radius={[4, 4, 0, 0]}
-          />
+          <Bar dataKey="votes" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

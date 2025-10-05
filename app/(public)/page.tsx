@@ -5,32 +5,26 @@ import { ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
 
 export default function HomePage() {
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center">
-      <div className="container max-w-4xl mx-auto px-4 py-8">
+    <div>
+      <div className="w-full">
         <div className="flex flex-col items-center gap-8">
-          {/* Hero Section */}
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-primary">
               E-Pilketos
             </h1>
             <p className="text-xl text-muted-foreground">
-              Sistem Pemilihan Ketua & Wakil Ketua OSIS SMK HS AGUNG
+              Sistem Pemilihan Ketua & Wakil Ketua OSIS SMK CIHUY KAN DULU LE
               <br />
               Periode 2025/2026
             </p>
           </div>
-
-          {/* CTA Section */}
           <div className="w-full max-w-sm">
             <StartButton />
             <p className="mt-3 text-sm text-center text-muted-foreground">
               Masukkan token yang diberikan oleh panitia untuk memulai
             </p>
           </div>
-
-          {/* Info Cards */}
           <div className="w-full grid gap-6 sm:grid-cols-2">
-            {/* Steps Card */}
             <div className="rounded-xl border bg-card p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 rounded-lg border flex items-center justify-center">
@@ -65,8 +59,6 @@ export default function HomePage() {
                 </li>
               </ol>
             </div>
-
-            {/* Important Notes Card */}
             <div className="rounded-xl border bg-card p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 rounded-lg border flex items-center justify-center">
